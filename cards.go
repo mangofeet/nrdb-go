@@ -3,10 +3,21 @@ package nrdb
 import (
 	"fmt"
 	"net/url"
+	"strconv"
 	"time"
 )
 
 func (cl client) Cards(filter *CardFilter) ([]*Card, error) {
+
+	res, err := cl.cardReq(filter)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Data, nil
+}
+
+func (cl client) cardReq(filter *CardFilter) (*Response[Card], error) {
 	var res Response[Card]
 
 	var query url.Values
@@ -22,7 +33,47 @@ func (cl client) Cards(filter *CardFilter) ([]*Card, error) {
 		return nil, err
 	}
 
-	return res.Data, nil
+	return &res, nil
+}
+
+func (cl client) AllCards(filter *CardFilter) ([]*Card, error) {
+
+	res, err := cl.cardReq(filter)
+	if err != nil {
+		return nil, err
+	}
+
+	// if no links, return now
+	if res.Links == nil {
+		return res.Data, nil
+	}
+
+	// if no "next" link, return now
+	if res.Links.Next == nil {
+		return res.Data, nil
+	}
+
+	nextURLStr := *res.Links.Next
+	nextURL, err := url.Parse(nextURLStr)
+	if err != nil {
+		return nil, fmt.Errorf(`invalid "next" link %s: %w`, nextURLStr, err)
+	}
+
+	nextQuery := nextURL.Query()
+	nextOffset := nextQuery.Get("page[offset]")
+	pageOffset, err := strconv.ParseUint(nextOffset, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf(`invalid "next" page offset %s: %w`, nextOffset, err)
+	}
+
+	filter.PageOffset = &pageOffset
+
+	next, err := cl.AllCards(filter)
+	if err != nil {
+		return nil, fmt.Errorf("getting offset %d: %w", pageOffset, err)
+	}
+
+	return append(res.Data, next...), nil
 }
 
 type Card struct {
