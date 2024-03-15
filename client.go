@@ -21,6 +21,8 @@ type Client interface {
 	Cards(*CardFilter) ([]*Card, error)
 	AllCards(*CardFilter) ([]*Card, error)
 	Card(cardID string) (*Card, error)
+	Factions(*FactionFilter) ([]*Faction, error)
+	Faction(factionID string) (*Faction, error)
 }
 
 type Filter interface {

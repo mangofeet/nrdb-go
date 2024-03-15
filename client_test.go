@@ -230,3 +230,47 @@ func TestCard(t *testing.T) {
 	t.Log(res)
 
 }
+
+func TestFactions(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	t.Run("no filter", func(t *testing.T) {
+		res, err := cl.Factions(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+
+	})
+
+	side := "runner"
+
+	t.Run("filter by side", func(t *testing.T) {
+
+		res, err := cl.Factions(&nrdb.FactionFilter{
+			SideID: &side,
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+	})
+}
+
+func TestFaction(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Faction("criminal")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(res)
+
+}
