@@ -171,9 +171,11 @@ func TestCards(t *testing.T) {
 
 	})
 
+	search := "e:system_gateway"
+
 	t.Run("filter by set", func(t *testing.T) {
 		res, err := cl.Cards(&nrdb.CardFilter{
-			Search: "e:system_gateway",
+			Search: &search,
 		})
 		if err != nil {
 			t.Fatal(err)
