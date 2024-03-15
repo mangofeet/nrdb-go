@@ -1,8 +1,17 @@
 package nrdb
 
+import (
+	"fmt"
+	"net/url"
+)
+
 type Links struct {
-	Self    string `json:"self,omitempty"`
-	Related string `json:"related,omitempty"`
+	Self     *string `json:"self,omitempty"`
+	Related  *string `json:"related,omitempty"`
+	First    *string `json:"first,omitempty"`
+	Last     *string `json:"last,omitempty"`
+	Previous *string `json:"prev,omitempty"`
+	Next     *string `json:"next,omitempty"`
 }
 
 type Relationship struct {
@@ -10,7 +19,8 @@ type Relationship struct {
 }
 
 type Response[T any] struct {
-	Data []*T `json:"data"`
+	Data  []*T   `json:"data"`
+	Links *Links `json:"links"`
 }
 
 type Document[A any, R any] struct {
