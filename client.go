@@ -21,7 +21,7 @@ type Client interface {
 }
 
 type Filter interface {
-	Encode() (url.Values, error)
+	Query() (url.Values, error)
 }
 
 type client struct {

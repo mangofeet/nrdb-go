@@ -34,7 +34,7 @@ type CardSetFilter struct {
 	CardSetTypeID string
 }
 
-func (filter CardSetFilter) Encode() (url.Values, error) {
+func (filter CardSetFilter) Query() (url.Values, error) {
 	query := url.Values{}
 	if filter.CardCycleID != "" {
 		query.Set("filter[card_cycle_id]", filter.CardCycleID)
@@ -57,7 +57,7 @@ func (cl client) CardSets(filter *CardSetFilter) ([]*CardSet, error) {
 
 	var query url.Values
 	if filter != nil {
-		q, err := filter.Encode()
+		q, err := filter.Query()
 		if err != nil {
 			return nil, fmt.Errorf("encoding filter: %w", err)
 		}

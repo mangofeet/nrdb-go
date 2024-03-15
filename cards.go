@@ -11,7 +11,7 @@ func (cl client) Cards(filter *CardFilter) ([]*Card, error) {
 
 	var query url.Values
 	if filter != nil {
-		q, err := filter.Encode()
+		q, err := filter.Query()
 		if err != nil {
 			return nil, fmt.Errorf("encoding filter: %w", err)
 		}
@@ -103,14 +103,15 @@ type CardRelationships struct {
 }
 
 type CardFilter struct {
-	Search string
+	Params
+	Search *string
 }
 
-func (filter CardFilter) Encode() (url.Values, error) {
-	query := url.Values{}
+func (filter CardFilter) Query() (url.Values, error) {
+	query := filter.SetPageInfo(url.Values{})
 
-	if filter.Search != "" {
-		query.Set("filter[search]", filter.Search)
+	if filter.Search != nil {
+		query.Set("filter[search]", *filter.Search)
 	}
 
 	return query, nil
