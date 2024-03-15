@@ -40,18 +40,30 @@ type Faction struct {
 }
 
 func (doc Faction) Name() string {
+	if doc.Attributes == nil {
+		return ""
+	}
 	return doc.Attributes.Name
 }
 
 func (doc Faction) Description() string {
+	if doc.Attributes == nil {
+		return ""
+	}
 	return doc.Attributes.Description
 }
 
 func (doc Faction) IsMini() bool {
+	if doc.Attributes == nil {
+		return false
+	}
 	return doc.Attributes.IsMini
 }
 
 func (doc Faction) SideID() string {
+	if doc.Attributes == nil {
+		return ""
+	}
 	return doc.Attributes.SideID
 }
 
