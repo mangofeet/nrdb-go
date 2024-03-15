@@ -39,7 +39,7 @@ func (doc CardType) String() string {
 }
 
 func (cl client) CardTypes(filter *CardTypeFilter) ([]*CardType, error) {
-	var res Response[CardType]
+	var res Response[[]*CardType]
 
 	var query url.Values
 	if filter != nil {

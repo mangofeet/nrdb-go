@@ -19,7 +19,7 @@ type Relationship struct {
 }
 
 type Response[T any] struct {
-	Data  []*T   `json:"data"`
+	Data  T      `json:"data"`
 	Links *Links `json:"links"`
 }
 

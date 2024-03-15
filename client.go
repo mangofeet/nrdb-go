@@ -20,6 +20,7 @@ type Client interface {
 	CardTypes(*CardTypeFilter) ([]*CardType, error)
 	Cards(*CardFilter) ([]*Card, error)
 	AllCards(*CardFilter) ([]*Card, error)
+	Card(cardID string) (*Card, error)
 }
 
 type Filter interface {

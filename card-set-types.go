@@ -24,7 +24,7 @@ func (doc CardSetType) String() string {
 }
 
 func (cl client) CardSetTypes() ([]*CardSetType, error) {
-	var res Response[CardSetType]
+	var res Response[[]*CardSetType]
 
 	if err := cl.nrdbReq("card_set_types", &res, nil); err != nil {
 		return nil, err

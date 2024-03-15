@@ -6,7 +6,7 @@ import (
 )
 
 func (cl client) CardSubtypes() ([]*CardSubtype, error) {
-	var res Response[CardSubtype]
+	var res Response[[]*CardSubtype]
 
 	if err := cl.nrdbReq("card_subtypes", &res, nil); err != nil {
 		return nil, err

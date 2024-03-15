@@ -53,7 +53,7 @@ func (doc CardSet) String() string {
 }
 
 func (cl client) CardSets(filter *CardSetFilter) ([]*CardSet, error) {
-	var res Response[CardSet]
+	var res Response[[]*CardSet]
 
 	var query url.Values
 	if filter != nil {

@@ -7,6 +7,16 @@ import (
 	"time"
 )
 
+func (cl client) Card(cardID string) (*Card, error) {
+	var res Response[Card]
+
+	if err := cl.nrdbReq(fmt.Sprintf("cards/%s", cardID), &res, nil); err != nil {
+		return nil, err
+	}
+
+	return &res.Data, nil
+}
+
 func (cl client) Cards(filter *CardFilter) ([]*Card, error) {
 
 	res, err := cl.cardReq(filter)
@@ -15,25 +25,6 @@ func (cl client) Cards(filter *CardFilter) ([]*Card, error) {
 	}
 
 	return res.Data, nil
-}
-
-func (cl client) cardReq(filter *CardFilter) (*Response[Card], error) {
-	var res Response[Card]
-
-	var query url.Values
-	if filter != nil {
-		q, err := filter.Query()
-		if err != nil {
-			return nil, fmt.Errorf("encoding filter: %w", err)
-		}
-		query = q
-	}
-
-	if err := cl.nrdbReq("cards", &res, query); err != nil {
-		return nil, err
-	}
-
-	return &res, nil
 }
 
 func (cl client) AllCards(filter *CardFilter) ([]*Card, error) {
@@ -81,7 +72,7 @@ func (cl client) AllCards(filter *CardFilter) ([]*Card, error) {
 }
 
 type Card struct {
-	Document[CardPoolAttributes, CardPoolRelationships]
+	Document[CardAttributes, CardRelationships]
 }
 
 type CardAttributes struct {
@@ -173,5 +164,24 @@ func (filter CardFilter) Query() (url.Values, error) {
 }
 
 func (doc Card) String() string {
-	return fmt.Sprintf("%s (%s)", doc.Attributes.Name, doc.ID)
+	return fmt.Sprintf("%s (%s)", doc.Attributes.Title, doc.ID)
+}
+
+func (cl client) cardReq(filter *CardFilter) (*Response[[]*Card], error) {
+	var res Response[[]*Card]
+
+	var query url.Values
+	if filter != nil {
+		q, err := filter.Query()
+		if err != nil {
+			return nil, fmt.Errorf("encoding filter: %w", err)
+		}
+		query = q
+	}
+
+	if err := cl.nrdbReq("cards", &res, query); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }

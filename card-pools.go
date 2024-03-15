@@ -31,7 +31,7 @@ func (doc CardPool) String() string {
 }
 
 func (cl client) CardPools() ([]*CardPool, error) {
-	var res Response[CardPool]
+	var res Response[[]*CardPool]
 
 	if err := cl.nrdbReq("card_pools", &res, nil); err != nil {
 		return nil, err

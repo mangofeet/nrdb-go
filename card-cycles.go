@@ -30,7 +30,7 @@ func (doc CardCycle) String() string {
 }
 
 func (cl client) CardCycles() ([]*CardCycle, error) {
-	var res Response[CardCycle]
+	var res Response[[]*CardCycle]
 
 	if err := cl.nrdbReq("card_cycles", &res, nil); err != nil {
 		return nil, err

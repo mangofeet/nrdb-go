@@ -218,3 +218,15 @@ func TestAllCards(t *testing.T) {
 		}
 	})
 }
+
+func TestCard(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Card("sure_gamble")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(res)
+
+}
