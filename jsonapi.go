@@ -38,11 +38,11 @@ type Params struct {
 
 func (p Params) SetPageInfo(query url.Values) url.Values {
 	if p.PageLimit != nil {
-		query.Set("filter[page]", fmt.Sprintf("%d", *p.PageLimit))
+		query.Set("page[limit]", fmt.Sprintf("%d", *p.PageLimit))
 	}
 
 	if p.PageOffset != nil {
-		query.Set("filter[offset]", fmt.Sprintf("%d", *p.PageOffset))
+		query.Set("page[offset]", fmt.Sprintf("%d", *p.PageOffset))
 	}
 
 	return query

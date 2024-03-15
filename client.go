@@ -3,6 +3,7 @@ package nrdb
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -18,6 +19,7 @@ type Client interface {
 	CardSubtypes() ([]*CardSubtype, error)
 	CardTypes(*CardTypeFilter) ([]*CardType, error)
 	Cards(*CardFilter) ([]*Card, error)
+	AllCards(*CardFilter) ([]*Card, error)
 }
 
 type Filter interface {
@@ -49,6 +51,8 @@ func (cl client) nrdbReq(path string, out any, query url.Values) error {
 		Path:     fmt.Sprintf("/api/v3/public/%s", path),
 		RawQuery: query.Encode(),
 	}
+
+	log.Println(reqURL.String())
 
 	req, err := http.NewRequest(http.MethodGet, reqURL.String(), nil)
 	if err != nil {

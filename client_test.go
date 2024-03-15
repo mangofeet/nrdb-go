@@ -187,3 +187,34 @@ func TestCards(t *testing.T) {
 	})
 
 }
+
+func TestAllCards(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	t.Run("no filter", func(t *testing.T) {
+		res, err := cl.AllCards(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+
+	})
+
+	search := "card_cycle:borealis"
+
+	t.Run("filter by cycle", func(t *testing.T) {
+		res, err := cl.AllCards(&nrdb.CardFilter{
+			Search: &search,
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+	})
+}

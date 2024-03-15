@@ -66,6 +66,10 @@ func (cl client) AllCards(filter *CardFilter) ([]*Card, error) {
 		return nil, fmt.Errorf(`invalid "next" page offset %s: %w`, nextOffset, err)
 	}
 
+	if filter == nil {
+		filter = &CardFilter{}
+	}
+
 	filter.PageOffset = &pageOffset
 
 	next, err := cl.AllCards(filter)
