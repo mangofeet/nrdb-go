@@ -123,3 +123,65 @@ func TestCardSubtypes(t *testing.T) {
 	}
 
 }
+
+func TestCardTypes(t *testing.T) {
+
+	cl := nrdb.NewClient()
+
+	t.Run("no filter", func(t *testing.T) {
+		res, err := cl.CardTypes(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+
+	})
+
+	t.Run("filter side", func(t *testing.T) {
+		res, err := cl.CardTypes(&nrdb.CardTypeFilter{
+			SideID: "runner",
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+	})
+
+}
+
+func TestCards(t *testing.T) {
+
+	cl := nrdb.NewClient()
+
+	t.Run("no filter", func(t *testing.T) {
+		res, err := cl.Cards(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+
+	})
+
+	t.Run("filter by set", func(t *testing.T) {
+		res, err := cl.Cards(&nrdb.CardFilter{
+			Search: "e:system_gateway",
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+	})
+
+}

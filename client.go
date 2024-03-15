@@ -16,6 +16,8 @@ type Client interface {
 	CardSetTypes() ([]*CardSetType, error)
 	CardSets(*CardSetFilter) ([]*CardSet, error)
 	CardSubtypes() ([]*CardSubtype, error)
+	CardTypes(*CardTypeFilter) ([]*CardType, error)
+	Cards(*CardFilter) ([]*Card, error)
 }
 
 type Filter interface {
