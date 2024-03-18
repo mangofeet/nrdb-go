@@ -76,8 +76,8 @@ type Card struct {
 }
 
 type CardAttributes struct {
-	AdvancementRequirement int               `json:"advancement_requirement"`
-	AgendaPoints           int               `json:"agenda_points"`
+	AdvancementRequirement *int              `json:"advancement_requirement"`
+	AgendaPoints           *int              `json:"agenda_points"`
 	Attribution            *string           `json:"attribution"`
 	BaseLink               *int              `json:"base_link"`
 	CardAbilities          *CardAbilities    `json:"card_abilities"`

@@ -23,6 +23,13 @@ type Client interface {
 	Card(cardID string) (*Card, error)
 	Factions(*FactionFilter) ([]*Faction, error)
 	Faction(factionID string) (*Faction, error)
+	Formats() ([]*Format, error)
+	Format(formatID string) (*Format, error)
+	Illustrators() ([]*Illustrator, error)
+	Illustrator(illustratorID string) (*Illustrator, error)
+	Printings(*PrintingFilter) ([]*Printing, error)
+	AllPrintings(*PrintingFilter) ([]*Printing, error)
+	Printing(printingID string) (*Printing, error)
 }
 
 type Filter interface {
@@ -47,7 +54,6 @@ func (cl client) WithHTTPCLient(httpClient http.Client) Client {
 }
 
 func (cl client) nrdbReq(path string, out any, query url.Values) error {
-
 	reqURL := url.URL{
 		Scheme:   "https",
 		Host:     "api-preview.netrunnerdb.com",
@@ -57,7 +63,11 @@ func (cl client) nrdbReq(path string, out any, query url.Values) error {
 
 	log.Println(reqURL.String())
 
-	req, err := http.NewRequest(http.MethodGet, reqURL.String(), nil)
+	return cl.doNRDBReq(reqURL.String(), out)
+}
+
+func (cl client) doNRDBReq(reqURL string, out any) error {
+	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
 	if err != nil {
 		return fmt.Errorf("making request: %w", err)
 	}
@@ -76,5 +86,4 @@ func (cl client) nrdbReq(path string, out any, query url.Values) error {
 	}
 
 	return nil
-
 }

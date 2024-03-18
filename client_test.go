@@ -274,3 +274,129 @@ func TestFaction(t *testing.T) {
 	t.Log(res)
 
 }
+
+func TestFormats(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Formats()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, doc := range res {
+		t.Log(doc)
+	}
+}
+
+func TestFormat(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Format("standard")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(res)
+
+}
+
+func TestIllustrators(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Illustrators()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, doc := range res {
+		t.Log(doc)
+	}
+}
+
+func TestIllustrator(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Illustrator("zoe_cohen")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(res)
+
+}
+
+func TestPrintings(t *testing.T) {
+
+	cl := nrdb.NewClient()
+
+	t.Run("no filter", func(t *testing.T) {
+		res, err := cl.Printings(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+
+	})
+
+	search := "e:system_gateway"
+
+	t.Run("filter by set", func(t *testing.T) {
+		res, err := cl.Printings(&nrdb.PrintingFilter{
+			CardFilter: nrdb.CardFilter{Search: &search},
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+	})
+
+}
+
+func TestAllPrintings(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	t.Run("no filter", func(t *testing.T) {
+		res, err := cl.AllPrintings(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+
+	})
+
+	search := "card_cycle:liberation"
+
+	t.Run("filter by cycle", func(t *testing.T) {
+		res, err := cl.AllPrintings(&nrdb.PrintingFilter{
+			CardFilter: nrdb.CardFilter{Search: &search},
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, doc := range res {
+			t.Log(doc)
+		}
+	})
+}
+
+func TestPrinting(t *testing.T) {
+	cl := nrdb.NewClient()
+
+	res, err := cl.Printing("30030")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(res)
+
+}
