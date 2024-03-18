@@ -75,6 +75,311 @@ type Card struct {
 	Document[CardAttributes, CardRelationships]
 }
 
+func (doc Card) AdvancementRequirement() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.AdvancementRequirement == nil {
+		return 0
+	}
+	return *doc.Attributes.AdvancementRequirement
+}
+
+func (doc Card) AgendaPoints() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.AgendaPoints == nil {
+		return 0
+	}
+	return *doc.Attributes.AgendaPoints
+}
+
+func (doc Card) Attribution() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	if doc.Attributes.Attribution == nil {
+		return ""
+	}
+	return *doc.Attributes.Attribution
+}
+
+func (doc Card) BaseLink() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.BaseLink == nil {
+		return 0
+	}
+	return *doc.Attributes.BaseLink
+}
+
+func (doc Card) CardAbilities() *CardAbilities {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.CardAbilities
+}
+
+func (doc Card) CardCycleIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.CardCycleIDs
+}
+
+func (doc Card) CardPoolIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.CardPoolIDs
+}
+
+func (doc Card) CardSetIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.CardSetIDs
+}
+
+func (doc Card) CardSubtypeIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.CardSubtypeIDs
+}
+
+func (doc Card) CardTypeID() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.CardTypeID
+}
+
+func (doc Card) Cost() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.Cost == nil {
+		return 0
+	}
+	return *doc.Attributes.Cost
+}
+
+func (doc Card) DateRelease() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.DateRelease
+}
+
+func (doc Card) DeckLimit() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	return doc.Attributes.DeckLimit
+}
+
+func (doc Card) DesignedBy() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.DesignedBy
+}
+
+func (doc Card) DisplaySubtypes() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	if doc.Attributes.DisplaySubtypes == nil {
+		return ""
+	}
+	return *doc.Attributes.DisplaySubtypes
+}
+
+func (doc Card) FactionID() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.FactionID
+}
+
+func (doc Card) FormatIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.FormatIDs
+}
+
+func (doc Card) InRestriction() bool {
+	if doc.Attributes == nil {
+		return false
+	}
+	return doc.Attributes.InRestriction
+}
+
+func (doc Card) InfluenceCost() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.InfluenceCost == nil {
+		return 0
+	}
+	return *doc.Attributes.InfluenceCost
+}
+
+func (doc Card) InfluenceLimit() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.InfluenceLimit == nil {
+		return 0
+	}
+	return *doc.Attributes.InfluenceLimit
+}
+
+func (doc Card) IsUnique() bool {
+	if doc.Attributes == nil {
+		return false
+	}
+	return doc.Attributes.IsUnique
+}
+
+func (doc Card) LatestPrintingID() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.LatestPrintingID
+}
+
+func (doc Card) MemoryCost() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.MemoryCost == nil {
+		return 0
+	}
+	return *doc.Attributes.MemoryCost
+}
+
+func (doc Card) MinimumDeckSize() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.MinimumDeckSize == nil {
+		return 0
+	}
+	return *doc.Attributes.MinimumDeckSize
+}
+
+func (doc Card) NumPrintings() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	return doc.Attributes.NumPrintings
+}
+
+func (doc Card) PrintingIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.PrintingIDs
+}
+
+func (doc Card) PrintingsReleasedBy() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.PrintingsReleasedBy
+}
+
+func (doc Card) Pronouns() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	if doc.Attributes.Pronouns == nil {
+		return ""
+	}
+	return *doc.Attributes.Pronouns
+}
+
+func (doc Card) RestrictionIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.RestrictionIDs
+}
+
+func (doc Card) Restrictions() *CardRestrictions {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.Restrictions
+}
+
+func (doc Card) SideID() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.SideID
+}
+
+func (doc Card) SnapshotIDs() []string {
+	if doc.Attributes == nil {
+		return nil
+	}
+	return doc.Attributes.SnapshotIDs
+}
+
+func (doc Card) Strength() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.Strength == nil {
+		return 0
+	}
+	return *doc.Attributes.Strength
+}
+
+func (doc Card) StrippedText() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.StrippedText
+}
+
+func (doc Card) StrippedTitle() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.StrippedTitle
+}
+
+func (doc Card) Title() string {
+	if doc.Attributes == nil {
+		return ""
+	}
+	return doc.Attributes.Title
+}
+
+func (doc Card) TrashCost() int {
+	if doc.Attributes == nil {
+		return 0
+	}
+	if doc.Attributes.TrashCost == nil {
+		return 0
+	}
+	return *doc.Attributes.TrashCost
+}
+
+func (doc Card) UpdatedAt() time.Time {
+	if doc.Attributes == nil {
+		return time.Time{}
+	}
+	return doc.Attributes.UpdatedAt
+}
+
 type CardAttributes struct {
 	AdvancementRequirement *int              `json:"advancement_requirement"`
 	AgendaPoints           *int              `json:"agenda_points"`
