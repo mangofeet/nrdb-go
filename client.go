@@ -3,7 +3,6 @@ package nrdb
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -61,7 +60,7 @@ func (cl client) nrdbReq(path string, out any, query url.Values) error {
 		RawQuery: query.Encode(),
 	}
 
-	log.Println(reqURL.String())
+	// log.Println(reqURL.String())
 
 	return cl.doNRDBReq(reqURL.String(), out)
 }
