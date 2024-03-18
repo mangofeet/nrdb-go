@@ -10,7 +10,7 @@ import (
 )
 
 type Client interface {
-	WithHTTPCLient(http.Client) Client
+	WithHTTPClient(http.Client) Client
 
 	CardCycles() ([]*CardCycle, error)
 	CardPools() ([]*CardPool, error)
@@ -48,7 +48,7 @@ func NewClient() Client {
 	}
 }
 
-func (cl client) WithHTTPCLient(httpClient http.Client) Client {
+func (cl client) WithHTTPClient(httpClient http.Client) Client {
 	cl.http = httpClient
 	return cl
 }
