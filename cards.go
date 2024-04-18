@@ -391,7 +391,7 @@ type CardAttributes struct {
 	CardSetIDs             []string          `json:"card_set_ids"`
 	CardSubtypeIDs         []string          `json:"card_subtype_ids"`
 	CardTypeID             string            `json:"card_type_id"`
-	Cost                   *int              `json:"cont"`
+	Cost                   *int              `json:"cost"`
 	DateRelease            string            `json:"date_release"`
 	DeckLimit              int               `json:"deck_limit"`
 	DesignedBy             string            `json:"designed_by"`
