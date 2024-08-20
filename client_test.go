@@ -159,8 +159,13 @@ func TestCards(t *testing.T) {
 
 	cl := nrdb.NewClient()
 
+	pageSize := uint64(10)
+	params := nrdb.Params{PageSize: &pageSize}
+
 	t.Run("no filter", func(t *testing.T) {
-		res, err := cl.Cards(nil)
+		res, err := cl.Cards(&nrdb.CardFilter{
+			Params: params,
+		})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -176,6 +181,7 @@ func TestCards(t *testing.T) {
 	t.Run("filter by set", func(t *testing.T) {
 		res, err := cl.Cards(&nrdb.CardFilter{
 			Search: &search,
+			Params: params,
 		})
 		if err != nil {
 			t.Fatal(err)

@@ -39,7 +39,7 @@ type client struct {
 	http http.Client
 }
 
-var defaultHTTPClient = http.Client{Timeout: time.Second * 15}
+var defaultHTTPClient = http.Client{Timeout: time.Second * 30}
 
 func NewClient() Client {
 	return client{

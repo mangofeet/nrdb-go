@@ -32,17 +32,17 @@ type Document[A any, R any] struct {
 }
 
 type Params struct {
-	PageLimit  *uint64
-	PageOffset *uint64
+	PageSize   *uint64
+	PageNumber *uint64
 }
 
 func (p Params) SetPageInfo(query url.Values) url.Values {
-	if p.PageLimit != nil {
-		query.Set("page[limit]", fmt.Sprintf("%d", *p.PageLimit))
+	if p.PageSize != nil {
+		query.Set("page[size]", fmt.Sprintf("%d", *p.PageSize))
 	}
 
-	if p.PageOffset != nil {
-		query.Set("page[offset]", fmt.Sprintf("%d", *p.PageOffset))
+	if p.PageNumber != nil {
+		query.Set("page[number]", fmt.Sprintf("%d", *p.PageNumber))
 	}
 
 	return query

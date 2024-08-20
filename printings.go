@@ -51,21 +51,21 @@ func (cl client) AllPrintings(filter *PrintingFilter) ([]*Printing, error) {
 	}
 
 	nextQuery := nextURL.Query()
-	nextOffset := nextQuery.Get("page[offset]")
-	pageOffset, err := strconv.ParseUint(nextOffset, 10, 64)
+	nextNumber := nextQuery.Get("page[number]")
+	pageNumber, err := strconv.ParseUint(nextNumber, 10, 64)
 	if err != nil {
-		return nil, fmt.Errorf(`invalid "next" page offset %s: %w`, nextOffset, err)
+		return nil, fmt.Errorf(`invalid "next" page offset %s: %w`, nextNumber, err)
 	}
 
 	if filter == nil {
 		filter = &PrintingFilter{}
 	}
 
-	filter.PageOffset = &pageOffset
+	filter.PageNumber = &pageNumber
 
 	next, err := cl.AllPrintings(filter)
 	if err != nil {
-		return nil, fmt.Errorf("getting offset %d: %w", pageOffset, err)
+		return nil, fmt.Errorf("getting offset %d: %w", pageNumber, err)
 	}
 
 	return append(res.Data, next...), nil

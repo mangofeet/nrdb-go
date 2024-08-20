@@ -51,21 +51,21 @@ func (cl client) AllCards(filter *CardFilter) ([]*Card, error) {
 	}
 
 	nextQuery := nextURL.Query()
-	nextOffset := nextQuery.Get("page[offset]")
-	pageOffset, err := strconv.ParseUint(nextOffset, 10, 64)
+	nextNumber := nextQuery.Get("page[number]")
+	pageNumber, err := strconv.ParseUint(nextNumber, 10, 64)
 	if err != nil {
-		return nil, fmt.Errorf(`invalid "next" page offset %s: %w`, nextOffset, err)
+		return nil, fmt.Errorf(`invalid "next" page offset %s: %w`, nextNumber, err)
 	}
 
 	if filter == nil {
 		filter = &CardFilter{}
 	}
 
-	filter.PageOffset = &pageOffset
+	filter.PageNumber = &pageNumber
 
 	next, err := cl.AllCards(filter)
 	if err != nil {
-		return nil, fmt.Errorf("getting offset %d: %w", pageOffset, err)
+		return nil, fmt.Errorf("getting offset %d: %w", pageNumber, err)
 	}
 
 	return append(res.Data, next...), nil
@@ -75,6 +75,9 @@ type Card struct {
 	Document[CardAttributes, CardRelationships]
 }
 
+// AdvancementRequirement will return -1 if the advancement
+// requirement is `X` and -2 if it cannot parse the value for some
+// reason
 func (doc Card) AdvancementRequirement() int {
 	if doc.Attributes == nil {
 		return 0
@@ -82,7 +85,16 @@ func (doc Card) AdvancementRequirement() int {
 	if doc.Attributes.AdvancementRequirement == nil {
 		return 0
 	}
-	return *doc.Attributes.AdvancementRequirement
+
+	if *doc.Attributes.AdvancementRequirement == "X" {
+		return -1
+	}
+	ac, err := strconv.Atoi(*doc.Attributes.AdvancementRequirement)
+	if err != nil {
+		return -2
+	}
+
+	return ac
 }
 
 func (doc Card) AgendaPoints() int {
@@ -157,6 +169,8 @@ func (doc Card) CardTypeID() string {
 	return doc.Attributes.CardTypeID
 }
 
+// Cost will return -1 if the advancement requirement is `X` and -2 if
+// it cannot parse the value for some reason
 func (doc Card) Cost() int {
 	if doc.Attributes == nil {
 		return 0
@@ -164,7 +178,16 @@ func (doc Card) Cost() int {
 	if doc.Attributes.Cost == nil {
 		return 0
 	}
-	return *doc.Attributes.Cost
+
+	if *doc.Attributes.Cost == "X" {
+		return -1
+	}
+	ac, err := strconv.Atoi(*doc.Attributes.Cost)
+	if err != nil {
+		return -2
+	}
+
+	return ac
 }
 
 func (doc Card) DateRelease() string {
@@ -381,7 +404,7 @@ func (doc Card) UpdatedAt() time.Time {
 }
 
 type CardAttributes struct {
-	AdvancementRequirement *int              `json:"advancement_requirement"`
+	AdvancementRequirement *string           `json:"advancement_requirement"`
 	AgendaPoints           *int              `json:"agenda_points"`
 	Attribution            *string           `json:"attribution"`
 	BaseLink               *int              `json:"base_link"`
@@ -391,7 +414,7 @@ type CardAttributes struct {
 	CardSetIDs             []string          `json:"card_set_ids"`
 	CardSubtypeIDs         []string          `json:"card_subtype_ids"`
 	CardTypeID             string            `json:"card_type_id"`
-	Cost                   *int              `json:"cost"`
+	Cost                   *string           `json:"cost"`
 	DateRelease            string            `json:"date_release"`
 	DeckLimit              int               `json:"deck_limit"`
 	DesignedBy             string            `json:"designed_by"`
